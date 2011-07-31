@@ -7,11 +7,19 @@ import android.hardware.SensorEventListener;
 public class TiltListener implements SensorEventListener{
 
     float[] values;
+	private final SocialServerActivity socialServerActivity;
 
+    public TiltListener(SocialServerActivity activity) {
+		this.socialServerActivity = activity;
+    	
+    }
+    
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if(Sensor.TYPE_ACCELEROMETER == sensorEvent.sensor.getType()){
+        if(Sensor.TYPE_ORIENTATION == sensorEvent.sensor.getType()){
             values = sensorEvent.values.clone();
+            this.socialServerActivity.updateSensor(sensorEvent.sensor.getType(), values);
         }
+        
     }
 
     public void onAccuracyChanged(Sensor sensor, int i) {
